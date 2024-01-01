@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <title>To-do-List</title>
+  <style>
+        body {
+      background-color: blueviolet;
+    }
+
+    .container {
+      background-color: aliceblue;
+      max-width: 540px;
+      width: 100%;
+      border-radius: 10px;
+
+    }
+
+    #main {
+      width: 100%;
+      max-width: 540px;
+      margin: 100px auto 20px;
+      padding: 30px;
+    }
+
+    #input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background-color: transparent;
+      padding: 10px;
+    }
+    .edit  {
+      margin-left: 30px;
+      margin-right: 10px;
+      color: blue;
+    }
+
+    .dell  {
+
+      color: red;
+    }
+
+    #AddButton {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="main">
+          <h1 class="text-center">To Do List</h1>
+          <div class="d-flex justify-content-between align-items-center ">
+    
+            <input type="text" id="input" placeholder="Add Here" />
+            <button class="btn btn-success mb-4 rounded-pill " id="AddButton" onclick="add(event)">
+              ADD
+            </button>
+          </div>
+          <ul id="ul" style="list-style-type: circle;">
+        
+          </ul>
+        </div>
+</body>
+<script>
+  let selectedrow = null;
+  const input = document.getElementById("input");
+  const addButton = document.getElementById("AddButton");
+  const main = document.getElementById("main");
+  const ul = document.getElementById("ul");
+
+  const clearall = (e) => {
+    input.value = "";
+  };
+
+  const add = (e) => {
+    if (input.value === "") {
+      alert("add something!");
+    } else {
+      if (selectedrow == null) {
+        let li = document.createElement("li");
+        li.className = "d-flex justify-content-between"
+        li.innerHTML=`${input.value} <div>
+                <i class="fa-regular fa-pen-to-square edit" onclick="editIcon(event)"  ></i>
+               <i class="fa-solid fa-trash dell" onclick="delIcon(event)"></i></div>`;
+       
+        ul.appendChild(li);
+        clearall();
+      } else {
+        selectedrow.firstChild.textContent = input.value;
+        selectedrow = null;
+        addButton.textContent = "ADD"
+        clearall();
+      }
+    }
+
+    //del function
+
+    delIcon = (e) => {
+      e.target.parentElement.parentNode.remove();
+    };
+
+    //edit function
+    editIcon = (e) => {
+      selectedrow = e.target.parentElement.parentNode;
+      input.value = selectedrow.firstChild.textContent.trim();
+      addButton.textContent = "Done"
+    };
+
+  };
+</script>
+
+</html>
